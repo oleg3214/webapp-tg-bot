@@ -46,27 +46,15 @@
   <script src="https://telegram.org/js/telegram-web-app.js?57"></script>
 </head>
 <body>
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab('shop')">Магазин</div>
-    <div class="tab" onclick="switchTab('purchased')">Купленное</div>
-  </div>
   <div id="shop" class="content">
-    <div id="text">user</div>
-    <button id="bt1">Купить</button>
+    <div id="text">user1</div>
+    <button id="bt1">Купить1</button>
     
-  </div>
-  <div id="purchased" class="content" style="display:none">
-    <h3>Купленные товары:</h3>
-    <div id="purchased-list"></div>
   </div>
 
   <script>
-    const purchasedItems = [];
-    const tg = window.Telegram?.WebApp||null;
-    if(tg!==null){
-      const list = document.getElementById('text');
-      list.innerHTML = tg.initData.user.id
-      // Получаем данные пользователя
+    const tg = window.Telegram?.WebApp;
+    const list = document.getElementById('text');
 
       // Создаем кнопку
       const button = document.getElementById('bt1');
@@ -78,30 +66,8 @@
         tg.sendData("hello");
         tg.close();
       });
-    }else{
-      const list = document.getElementById('text');
-      list.innerHTML = "tg.initData.user.id"
-      // Получаем данные пользователя
-
-      // Создаем кнопку
-      const button = document.getElementById('bt1');
-      button.textContent = 'Отправить данные3';
-
-      // Добавляем обработчик события клика
-      button.addEventListener('click', () => {
-        // Отправляем данные через Telegram Bot API
-        tg.sendData("hello");
-        tg.close();
-      });
-    }
     
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.content').forEach(content => content.style.display = 'none');
-
-      document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
-      document.getElementById(tabId).style.display = 'block';
-    }
+    
 
     
   </script>
