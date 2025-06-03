@@ -62,32 +62,39 @@
 
   <script>
     const purchasedItems = [];
-    const tg = window.Telegram.WebApp;
+    const tg = window.Telegram?.WebApp||null;
+    if(tg!==null){
+      const list = document.getElementById('text');
+      list.innerHTML = tg.initData.user.id
+      // Получаем данные пользователя
 
-    tg.MainButton.text = "Changed Text"; //изменяем текст кнопки 
-    tg.MainButton.setText("Changed Text1"); //изменяем текст кнопки иначе
-    tg.MainButton.textColor = "#F55353"; //изменяем цвет текста кнопки
-    tg.MainButton.color = "#143F6B"; //изменяем цвет бэкграунда кнопки
-    tg.MainButton.setParams({"color": "#143F6B"}); //так изменяются все параметры 
-    tg.MainButton.show()
-    const list = document.getElementById('text');
-    list.innerHTML = tg.initDataUnsafe.user.id
-    // Получаем данные пользователя
+      // Создаем кнопку
+      const button = document.getElementById('bt1');
+      button.textContent = 'Отправить данные3';
 
-    // Создаем кнопку
-    const button = document.getElementById('bt1');
-    button.textContent = 'Отправить данные2';
+      // Добавляем обработчик события клика
+      button.addEventListener('click', () => {
+        // Отправляем данные через Telegram Bot API
+        tg.sendData("hello");
+        tg.close();
+      });
+    }else{
+      const list = document.getElementById('text');
+      list.innerHTML = "tg.initData.user.id"
+      // Получаем данные пользователя
 
-    // Добавляем обработчик события клика
-    button.addEventListener('click', () => {
-      // Отправляем данные через Telegram Bot API
-      tg.sendData("hello");
-      tg.close();
-    });
-    Telegram.WebApp.onEvent('mainButtonClicked', function(){
-      tg.sendData("some string that we need to send"); 
-      //при клике на основную кнопку отправляем данные в строковом виде
-    });
+      // Создаем кнопку
+      const button = document.getElementById('bt1');
+      button.textContent = 'Отправить данные3';
+
+      // Добавляем обработчик события клика
+      button.addEventListener('click', () => {
+        // Отправляем данные через Telegram Bot API
+        tg.sendData("hello");
+        tg.close();
+      });
+    }
+    
     function switchTab(tabId) {
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.content').forEach(content => content.style.display = 'none');
