@@ -64,14 +64,18 @@
     const purchasedItems = [];
     const tg = window.Telegram.WebApp;
 
-    tg.ready();
+    tg.MainButton.text = "Changed Text"; //изменяем текст кнопки 
+    tg.MainButton.setText("Changed Text1"); //изменяем текст кнопки иначе
+    tg.MainButton.textColor = "#F55353"; //изменяем цвет текста кнопки
+    tg.MainButton.color = "#143F6B"; //изменяем цвет бэкграунда кнопки
+    tg.MainButton.setParams({"color": "#143F6B"}); //так изменяются все параметры 
     const list = document.getElementById('text');
     list.innerHTML = tg.initDataUnsafe.user.id
     // Получаем данные пользователя
 
     // Создаем кнопку
     const button = document.getElementById('bt1');
-    button.textContent = 'Отправить данные';
+    button.textContent = 'Отправить данные1';
 
     // Добавляем обработчик события клика
     button.addEventListener('click', () => {
@@ -79,7 +83,10 @@
       tg.sendData("hello");
       tg.close();
     });
-
+    Telegram.WebApp.onEvent('mainButtonClicked', function(){
+      tg.sendData("some string that we need to send"); 
+      //при клике на основную кнопку отправляем данные в строковом виде
+    });
     function switchTab(tabId) {
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.content').forEach(content => content.style.display = 'none');
