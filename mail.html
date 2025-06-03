@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Shop WebApp</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+    }
+    .tabs {
+      display: flex;
+      background: #eee;
+      border-bottom: 1px solid #ccc;
+    }
+    .tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      background: #ddd;
+    }
+    .tab.active {
+      background: #fff;
+      font-weight: bold;
+    }
+    .content {
+      padding: 20px;
+    }
+    .item {
+      background: #fff;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('shop')">Магазин</div>
+    <div class="tab" onclick="switchTab('purchased')">Купленное</div>
+  </div>
+  <div id="shop" class="content">
+    <div class="item">
+      <h3>Товар 1</h3>
+      <p>Описание товара 1</p>
+      <button onclick="buyItem('Товар 1')">Купить</button>
+    </div>
+    <div class="item">
+      <h3>Товар 2</h3>
+      <p>Описание товара 2</p>
+      <button onclick="buyItem('Товар 2')">Купить</button>
+    </div>
+  </div>
+  <div id="purchased" class="content" style="display:none">
+    <h3>Купленные товары:</h3>
+    <div id="purchased-list"></div>
+  </div>
+
+  <script>
+    const purchasedItems = [];
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.content').forEach(content => content.style.display = 'none');
+
+      document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
+      document.getElementById(tabId).style.display = 'block';
+    }
+
+    function buyItem(name) {
+      if (!purchasedItems.includes(name)) {
+        purchasedItems.push(name);
+        updatePurchasedList();
+        alert(`Вы купили: ${name}`);
+      } else {
+        alert(`Вы уже купили: ${name}`);
+      }
+    }
+
+    function updatePurchasedList() {
+      const list = document.getElementById('purchased-list');
+      list.innerHTML = '';
+      purchasedItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.textContent = item;
+        list.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
