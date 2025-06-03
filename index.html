@@ -43,6 +43,7 @@
       cursor: pointer;
     }
   </style>
+  <script src="https://telegram.org/js/telegram-web-app.js?57"></script>
 </head>
 <body>
   <div class="tabs">
@@ -50,16 +51,9 @@
     <div class="tab" onclick="switchTab('purchased')">Купленное</div>
   </div>
   <div id="shop" class="content">
-    <div class="item">
-      <h3>Товар 1</h3>
-      <p>Описание товара 1</p>
-      <button onclick="buyItem('Товар 1')">Купить</button>
-    </div>
-    <div class="item">
-      <h3>Товар 2</h3>
-      <p>Описание товара 2</p>
-      <button onclick="buyItem('Товар 2')">Купить</button>
-    </div>
+    
+    <button id="bt1">Купить</button>
+    
   </div>
   <div id="purchased" class="content" style="display:none">
     <h3>Купленные товары:</h3>
@@ -68,6 +62,23 @@
 
   <script>
     const purchasedItems = [];
+    const tg = window.Telegram.WebApp;
+
+    tg.ready();
+
+    // Получаем данные пользователя
+    const userData = tg.initData;
+
+    // Создаем кнопку
+    const button = document.getElementById('bt1');
+    button.textContent = 'Отправить данные';
+
+    // Добавляем обработчик события клика
+    button.addEventListener('click', () => {
+      // Отправляем данные через Telegram Bot API
+      tg.sendData(JSON.stringify({ userData }));
+      tg.close();
+    });
 
     function switchTab(tabId) {
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
@@ -77,26 +88,7 @@
       document.getElementById(tabId).style.display = 'block';
     }
 
-    function buyItem(name) {
-      if (!purchasedItems.includes(name)) {
-        purchasedItems.push(name);
-        updatePurchasedList();
-        alert(`Вы купили: ${name}`);
-      } else {
-        alert(`Вы уже купили: ${name}`);
-      }
-    }
-
-    function updatePurchasedList() {
-      const list = document.getElementById('purchased-list');
-      list.innerHTML = '';
-      purchasedItems.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'item';
-        div.textContent = item;
-        list.appendChild(div);
-      });
-    }
+    
   </script>
 </body>
 </html>
