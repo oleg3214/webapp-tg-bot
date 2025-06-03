@@ -51,7 +51,7 @@
     <div class="tab" onclick="switchTab('purchased')">Купленное</div>
   </div>
   <div id="shop" class="content">
-    
+    <div id="text"></div>
     <button id="bt1">Купить</button>
     
   </div>
@@ -65,7 +65,8 @@
     const tg = window.Telegram.WebApp;
 
     tg.ready();
-
+    const list = document.getElementById('text');
+    list.innerHTML = tg.initData
     // Получаем данные пользователя
     const userData = tg.initData;
 
